@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function SignupForm() {
   const [usernameError, setUsernameError] = useState('');
@@ -330,9 +331,9 @@ export default function SignupForm() {
           <div className="text-center pt-4">
             <p className="text-gray-600">
               Already have an account?{' '}
-              <a href="/login" className="text-[#002455] hover:text-[#DC0000] font-semibold transition-colors">
+              <Link to="/login" className="text-[#002455] hover:text-[#DC0000] font-semibold transition-colors">
                 Sign In
-              </a>
+              </Link>
             </p>
           </div>
         </div>

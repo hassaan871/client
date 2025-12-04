@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function LoginForm() {
   const [usernameError, setUsernameError] = useState('');
@@ -219,9 +220,9 @@ export default function LoginForm() {
           <div className="text-center pt-4">
             <p className="text-gray-600">
               Don't have an account?{' '}
-              <a href="/signup" className="text-[#002455] hover:text-[#DC0000] font-semibold transition-colors">
+              <Link to="/signup" className="text-[#002455] hover:text-[#DC0000] font-semibold transition-colors">
                 Create Account
-              </a>
+              </Link>
             </p>
           </div>
         </div>
