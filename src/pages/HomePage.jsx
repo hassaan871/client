@@ -91,7 +91,7 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
                 <Link 
-                  to="/signup" 
+                  to="/video-processing" 
                   className="group px-8 py-4 rounded-xl bg-gradient-to-r from-[#DC0000] to-[#FF3838] text-white font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   Start Tracking Now
@@ -352,7 +352,7 @@ export default function HomePage() {
               href="/signup" 
               className="group px-10 py-5 rounded-xl bg-gradient-to-r from-[#DC0000] to-[#FF3838] text-white font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              Start Free Trial
+              Start For Free 
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>

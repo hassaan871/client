@@ -4,6 +4,7 @@ import SignupPage from "../pages/auth/SignupPage";
 import NotFound from "../pages/NotFoundPage";
 import HomePage from "../pages/HomePage";
 import VideoProcessingPage from "../pages/VideoProcessingPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -16,7 +17,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/video-processing',
-        element: < VideoProcessingPage />
+        element: (
+            <ProtectedRoute>
+                < VideoProcessingPage />
+            </ProtectedRoute>
+        )
     },
     {
         path: '/login',

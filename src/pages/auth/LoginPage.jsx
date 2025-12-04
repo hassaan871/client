@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export default function LoginForm() {
   const [usernameError, setUsernameError] = useState('');
@@ -7,11 +8,18 @@ export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
+  
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
     if (usernameError) {
       setUsernameError('');
+    }
+    if (apiError) {
+      setApiError('');
     }
   };
 
@@ -19,6 +27,9 @@ export default function LoginForm() {
     setPassword(e.target.value);
     if (passwordError) {
       setPasswordError('');
+    }
+    if (apiError) {
+      setApiError('');
     }
   };
 
@@ -37,11 +48,36 @@ export default function LoginForm() {
 
     if (!hasError) {
       setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        console.log('Login submitted:', { username, password });
+      setApiError('');
+      
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Login successful
+          login(data.user, data.token);
+          navigate('/'); // Redirect to home page
+        } else {
+          // Login failed
+          setApiError(data.detail || data.message || 'Invalid username or password');
+        }
+      } catch (error) {
+        setApiError('Network error. Please check your connection and try again.');
+        console.error('Login error:', error);
+      } finally {
         setIsLoading(false);
-      }, 1500);
+      }
     }
   };
 
@@ -111,6 +147,18 @@ export default function LoginForm() {
           Welcome Back
         </h1>
         <p className="text-center text-gray-600 mb-8">Sign in to continue to your account</p>
+
+        {/* API Error Message */}
+        {apiError && (
+          <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200">
+            <p className="text-sm text-red-600 flex items-center gap-2">
+              <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+              {apiError}
+            </p>
+          </div>
+        )}
 
         <div className="space-y-5">
           {/* Username Field */}
